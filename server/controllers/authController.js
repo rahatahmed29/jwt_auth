@@ -66,7 +66,6 @@ export const login=async(req,res)=>{
         })
     }
 }
-    
 export const refresh=(req,res)=>{
     const refreshToken=req.cookies.refreshToken
     if(!refreshToken) return res.status(401).json({ message: "No refresh token" })
@@ -80,4 +79,12 @@ export const refresh=(req,res)=>{
     }catch(err){
         return res.status(403).json({message: "Invalid refresh token"})
     }
+}
+export const logout=(req,res)=>{
+    res.clearCookie("refreshToken",{
+        httpOnly=true,
+        secure:false,
+        sameSite:"strict"
+    })
+    res.json({ message: "Logged out successfully" })
 }
